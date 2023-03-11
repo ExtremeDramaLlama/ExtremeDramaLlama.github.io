@@ -1,0 +1,60 @@
+/* /Components/HangmanComponent.razor.rz.scp.css */
+.puzzle[b-mo85vewtj4] {
+    font-family: monospace;
+    font-size: 2.5em;
+    letter-spacing: .1em;
+}
+/* /Shared/MainLayout.razor.rz.scp.css */
+.content[b-43x8pclwm3] {
+    max-width: 40em;
+    margin: 0 auto;
+}
+/* /Shared/WordleKeyboard.razor.rz.scp.css */
+.letter-container[b-l5u1ufomau] {
+    max-width: 2.2em;
+    min-width: 1.2em;
+    height: 2.6em;
+    color: turquoise;
+    border: 1px solid green;
+    border-radius: 10px;
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:2px;
+    flex: 1;
+}
+
+@media (any-hover: hover) {
+    .letter-container:hover[b-l5u1ufomau] {
+        filter: brightness(80%);
+    }
+}
+
+.letter[b-l5u1ufomau] {
+    margin:auto;
+    font-size: 1.6em;
+}
+
+.correct-letter[b-l5u1ufomau] {
+    background-color: green; 
+}
+
+.incorrect-letter[b-l5u1ufomau] {
+    background-color: darkgray;
+}
+
+.row[b-l5u1ufomau] {
+    display: flex;
+    flex-wrap: nowrap;
+    border: 1px solid black;
+    width: auto;
+}
+
+.row-2[b-l5u1ufomau] {
+    margin-left: 1.1em; 
+}
+
+.row-3[b-l5u1ufomau] {
+    margin-left: 2.2em; 
+}
