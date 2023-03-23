@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timer App</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      #timer {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        width: 100%;
+      }
+
+      input,
+      button {
+        font-size: 1rem;
+      }
+
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      button {
+        width: 100%;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        padding: 0.5rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      @media screen and (max-width: 480px) {
+        #timer {
+          font-size: 5rem;
+        }
+
+        input {
+          font-size: 3rem;
+        }
+        button {
+          font-size: 4rem;
+        }
+
+        input {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div id="timer">00:00</div>
+      <input
+        type="number"
+        id="minutes"
+        min="1"
+        step="1"
+        placeholder="Enter minutes"
+        value="6"
+      />
+      <button id="start">Start</button>
+      <button id="reset" style="display: none">Reset</button>
+    </div>
+
+    <script>
+      const timer = document.getElementById("timer");
+      const minutesInput = document.getElementById("minutes");
+      const startButton = document.getElementById("start");
+      const resetButton = document.getElementById("reset");
+
+      let countdown;
+      let timeRemaining;
+      let isPaused = false;
+
+      startButton.addEventListener("click", () => {
+        if (
+          startButton.textContent === "Start" ||
+          startButton.textContent === "Resume"
+        ) {
+          if (!isPaused) {
+            const minutes = parseInt(minutesInput.value);
+            if (!isNaN(minutes) && minutes > 0) {
+              timeRemaining = minutes * 60;
+            } else {
+              alert("Please enter a valid number of minutes.");
+              return;
+            }
+          }
+          isPaused = false;
+          startButton.textContent = "Pause";
+          resetButton.style.display = "inline";
+          startTimer();
+        } else if (startButton.textContent === "Pause") {
+          isPaused = true;
+          startButton.textContent = "Resume";
+          clearInterval(countdown);
+        }
+      });
+
+      resetButton.addEventListener("click", () => {
+        clearInterval(countdown);
+        timer.textContent = "00:00";
+        startButton.textContent = "Start";
+        resetButton.style.display = "none";
+        isPaused = false;
+      });
+
+      function startTimer() {
+        updateTimer();
+        countdown = setInterval(updateTimer, 1000);
+      }
+
+      function updateTimer() {
+        timeRemaining--;
+
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        timer.textContent = `${String(minutes).padStart(2, "0")}:${String(
+          seconds
+        ).padStart(2, "0")}`;
+
+        if (timeRemaining === 120 || timeRemaining === 60) {
+          playWarningAlarm();
+        }
+
+        if (timeRemaining <= 0) {
+          clearInterval(countdown);
+          playFinalAlarm();
+        }
+      }
+
+      function playWarningAlarm() {
+        const alarm = new Audio("warning.wav");
+        alarm.play();
+      }
+
+      function playFinalAlarm() {
+        const alarm = new Audio("final.wav");
+        alarm.play();
+      }
+    </script>
+  </body>
+</html>
